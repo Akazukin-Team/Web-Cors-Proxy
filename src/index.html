@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <title>Web Response Debugger</title>
+        <meta
+            name="keywords"
+            content="html response viewer, view html response"
+        />
+
+        <link rel="stylesheet" type="text/css" href="./index.css" />
+        <script src="./ViewManager.tsx"></script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>Web Response Debugger</h1>
+                <div class="url-input-container">
+                    <input
+                        type="url"
+                        class="url-input"
+                        id="urlInput"
+                        placeholder="https://example.com"
+                    />
+                    <button
+                        class="fetch-button"
+                        id="fetchButton"
+                        onclick="updateAndDisplay()"
+                    >
+                        取得
+                    </button>
+                </div>
+            </div>
+
+            <div id="loadingContainer" class="loading" style="display: none">
+                <div class="spinner"></div>
+                <p>サイトを取得中...</p>
+            </div>
+
+            <div id="errorContainer" style="display: none"></div>
+
+            <iframe
+                id="contentFrame"
+                class="content-frame"
+                style="display: none"
+            ></iframe>
+        </div>
+        <div class="content">
+            <div class="description">
+                <h1 class="description-title">Web Response Debugger</h1>
+                <div class="description-contents">
+                    <div class="description-content">
+                        <h2>概要</h2>
+                        <p>
+                            Web Response Debuggerは、
+                            指定したURLのHTMLレスポンスを取得し、表示するツールです。<br />
+                            Cookieの影響を受けないHTMLレスポンスを確認できます。<br />
+                            開発者やデザイナーが、Webページの構造や内容を迅速に確認するのに役立ちます。<br />
+                            このサイトは学習目的で作成されております。
+                        </p>
+                    </div>
+                    <div class="description-content">
+                        <h2>使い方</h2>
+                        <ol>
+                            <li>
+                                上部の入力欄に、確認したいWebページのURLを入力します。
+                            </li>
+                            <li>
+                                「取得」ボタンをクリックします。<br />
+                                取得中はローディングインジケーターが表示されます。
+                            </li>
+                            <li>
+                                取得が完了すると、指定したURLのHTMLレスポンスが表示されます。<br />
+                                エラーが発生した場合は、エラーメッセージが表示されます。
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <p>© 2025 Akazukin-Team</p>
+            </div>
+        </div>
+    </body>
+</html>

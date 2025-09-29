@@ -1,0 +1,16 @@
+{
+  "scripts": {
+    "build": "bun build ./src/index.html --outdir ./build --minify"
+  },
+  "files": [
+    "src/**/*.tsx"
+  ],
+  "devDependencies": {
+    "@types/bun": "^1.2.22",
+    "typescript": "^5.9.2"
+  },
+  "dependencies": {
+    "axios": "^1.12.2",
+    "esprima": "^4.0.1"
+  }
+}
