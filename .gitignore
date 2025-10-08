@@ -1,3 +1,9 @@
+# Ignore IDE files
+.idea/
+
+# Ignore build output
 build/
+
+# Ignore dependency directories and lock files
 node_modules/
 bun.lock

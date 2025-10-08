@@ -20,11 +20,13 @@ class ScriptProcessor implements IHtmlProcessor {
     }
 
     process(elem: HTMLElement): HTMLElement {
-        // 非同期処理のため、同期処理では元の要素を返す
-        this.processAsync(elem).catch((error) =>
-            console.warn("Failed to process script element:", error)
-        );
-        return elem;
+        let newElem = elem;
+        Promise.resolve()
+            .then(async () => (newElem = await this.processAsync(elem)))
+            .catch((error) =>
+                console.warn("Failed to process script element:", error)
+            );
+        return newElem;
     }
 
     async processAsync(elem: HTMLElement): Promise<HTMLElement> {
@@ -37,7 +39,7 @@ class ScriptProcessor implements IHtmlProcessor {
         const src = script.getAttribute("src");
         if (!src) return elem;
 
-        const absoluteUrl = this.fetcher.resolveUrl(src, this.baseUrl);
+        const absoluteUrl = utl.resolveUrl(src, this.baseUrl);
         if (utl.isIgnoreUrl(absoluteUrl)) {
             console.warn("Ignoring script from:", absoluteUrl);
             return elem;

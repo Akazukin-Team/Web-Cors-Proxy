@@ -1,5 +1,5 @@
-import { fetcher } from "./Fetcher";
-import { ViewManager } from "./ViewManager";
+import {utl} from "./Utils";
+import {ViewManager} from "./ViewManager";
 
 class IFrameMessenger {
     private viewMgr: ViewManager;
@@ -20,18 +20,24 @@ class IFrameMessenger {
 
         if (event.data.type === "REDIRECT") {
             console.log("Redirecting to:", event.data.url);
-            this.viewMgr.updateAndDisplayWithUrl(event.data.url);
+            if (event.data.format == true) {
+                this.viewMgr.updateAndDisplayWithUrl(utl.resolveUrl(event.data.url, this.viewMgr.getCurrentPage().getUrl()).href);
+            } else {
+                this.viewMgr.updateAndDisplayWithUrl(utl.resolveUrl(event.data.url, this.viewMgr.getCurrentPage().getUrl()).href);
+                //this.viewMgr.updateAndDisplayWithUrl(event.data.url);
+            }
         } else if (event.data.type === "NAVIGATE") {
             console.log("Navigating to:", event.data.url);
-            const url = fetcher.resolveUrl(
-                event.data.url,
-                this.viewMgr.getCurrentPage().getUrl()
-            );
-            this.viewMgr.displayWithUrl(url.href);
+            if (event.data.format == true) {
+                this.viewMgr.displayWithUrl(utl.resolveUrl(event.data.url, this.viewMgr.getCurrentPage().getUrl()).href);
+            } else {
+                this.viewMgr.displayWithUrl(utl.resolveUrl(event.data.url, this.viewMgr.getCurrentPage().getUrl()).href);
+                //this.viewMgr.displayWithUrl(event.data.url);
+            }
         } else if (event.data.type === "MESSAGE") {
             console.log("Message from iframe:", event.data.url);
         }
     }
 }
 
-export { IFrameMessenger };
+export {IFrameMessenger};

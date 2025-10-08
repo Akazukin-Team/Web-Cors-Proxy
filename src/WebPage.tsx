@@ -1,4 +1,4 @@
-import { Fetcher } from "./Fetcher";
+import {Fetcher} from "./Fetcher";
 
 class WebPage {
     private fetcher: Fetcher;
@@ -7,18 +7,18 @@ class WebPage {
     private frame: FrameData;
     private loading: boolean;
 
+    public constructor(fetcher: Fetcher, url: string) {
+        this.fetcher = fetcher;
+        this.url = new URL(url);
+        this.loading = true;
+    }
+
     public getFrame(): FrameData {
         return this.frame;
     }
 
     public setFrame(frame: FrameData): void {
         this.frame = frame;
-    }
-
-    public constructor(fetcher: Fetcher, url: string) {
-        this.fetcher = fetcher;
-        this.url = new URL(url);
-        this.loading = true;
     }
 
     public getUrl(): URL {
@@ -73,4 +73,4 @@ class FrameData {
     }
 }
 
-export { WebPage, FrameData };
+export {WebPage, FrameData};
