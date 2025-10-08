@@ -20,11 +20,13 @@ class CssProcessor implements IHtmlProcessor {
     }
 
     process(elem: HTMLElement): HTMLElement {
-        // 非同期処理のため、同期処理では元の要素を返す
-        this.processAsync(elem).catch((error) =>
-            console.warn("Failed to process CSS element:", error)
-        );
-        return elem;
+        let newElem = elem;
+        Promise.resolve()
+            .then(async () => (newElem = await this.processAsync(elem)))
+            .catch((error) =>
+                console.warn("Failed to process script element:", error)
+            );
+        return newElem;
     }
 
     async processAsync(elem: HTMLElement): Promise<HTMLElement> {
@@ -37,7 +39,7 @@ class CssProcessor implements IHtmlProcessor {
         const href: string | null = link.getAttribute("href");
         if (!href) return elem;
 
-        const absoluteUrl = this.fetcher.resolveUrl(href, this.baseUrl);
+        const absoluteUrl = utl.resolveUrl(href, this.baseUrl);
         if (utl.isIgnoreUrl(absoluteUrl)) {
             console.warn("Ignoring CSS from:", absoluteUrl);
             return elem;

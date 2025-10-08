@@ -16,15 +16,6 @@ class Fetcher {
         };
     }
 
-    public resolveUrl(url: string, base: URL): URL {
-        try {
-            return new URL(url, base);
-        } catch (error) {
-            console.warn(`Failed to resolve URL: ${url}`, error);
-            return new URL(url);
-        }
-    }
-
     public async processUrl(url: URL): Promise<string> {
         if (!URL.canParse(url)) {
             throw new Error("Invalid URL");
@@ -37,10 +28,6 @@ class Fetcher {
         const fetchUrl = new URL(actUrl);
         fetchUrl.pathname = distUrl;
         return fetchUrl.href;
-    }
-
-    public async fetchAsBlobFetchUrl(url: URL): Promise<string> {
-        return this.processUrl(url);
     }
 
     public async fetchAsBlobUrl(url: URL): Promise<string> {

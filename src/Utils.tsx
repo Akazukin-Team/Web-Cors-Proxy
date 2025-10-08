@@ -2,6 +2,7 @@ import { Fetcher, fetcher } from "./Fetcher";
 
 class Utils {
     private readonly fetcher: Fetcher;
+
     constructor(fetcher: Fetcher) {
         this.fetcher = fetcher;
     }
@@ -13,6 +14,15 @@ class Utils {
             .map((_, i) => arr.slice(i * num, (i + 1) * num));
     }
 
+    public resolveUrl(url: string, base: URL): URL {
+        try {
+            return new URL(url, base);
+        } catch (error) {
+            console.warn(`Failed to resolve URL: ${url}`, error);
+            return new URL(url);
+        }
+    }
+
     async processCss(cssContent: string, baseUrl: URL): Promise<string> {
         const urlRegex = /url\(['"]?([^'")]+)['"]?\)/g;
         let processedCss = cssContent;
@@ -20,7 +30,7 @@ class Utils {
         const matches = Array.from(cssContent.matchAll(urlRegex));
         const promises = matches.map(async (match) => {
             const originalUrl = match[1];
-            const absoluteUrl = this.fetcher.resolveUrl(originalUrl, baseUrl);
+            const absoluteUrl = utl.resolveUrl(originalUrl, baseUrl);
 
             if (this.isIgnoreUrl(absoluteUrl)) {
                 console.warn("Ignoring CSS from:", absoluteUrl);

@@ -66,14 +66,19 @@ body {
 .header {
     background-color: rgba(20, 40, 40, 0.4);
     color: white;
+
     padding-top: 10px;
     padding-bottom: 5px;
     padding-left: 15px;
     padding-right: 15px;
+
     position: fixed;
-    top: 10px;
-    left: 10px;
-    width: max(0.7rem, 750px);
+
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+
+    width: min(92.5vw, 750px);
     z-index: 1000;
     border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);

@@ -1,5 +1,6 @@
 import { Fetcher } from "../Fetcher";
 import { IHtmlProcessor } from "./IHtmlProcessor";
+import { utl } from "../Utils";
 
 class ImageProcessor implements IHtmlProcessor {
     private baseUrl: URL;
@@ -19,11 +20,13 @@ class ImageProcessor implements IHtmlProcessor {
     }
 
     process(elem: HTMLElement): HTMLElement {
-        // 非同期処理のため、同期処理では元の要素を返す
-        this.processAsync(elem).catch((error) =>
-            console.warn("Failed to process image element:", error)
-        );
-        return elem;
+        let newElem = elem;
+        Promise.resolve()
+            .then(async () => (newElem = await this.processAsync(elem)))
+            .catch((error) =>
+                console.warn("Failed to process script element:", error)
+            );
+        return newElem;
     }
 
     async processAsync(elem: HTMLElement): Promise<HTMLElement> {
@@ -36,7 +39,7 @@ class ImageProcessor implements IHtmlProcessor {
         const src = imgElem.getAttribute("src");
         if (!src || src.startsWith("data:")) return elem;
 
-        const absoluteUrl = this.fetcher.resolveUrl(src, this.baseUrl);
+        const absoluteUrl = utl.resolveUrl(src, this.baseUrl);
 
         try {
             const dataUrl: string = await this.fetcher.fetchAsBlobUrl(
