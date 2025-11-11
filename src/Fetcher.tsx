@@ -21,6 +21,7 @@ class Fetcher {
             throw new Error("Invalid URL");
         }
         const actUrl = new URL("https://cors-anywhere.azurewebsites.net/");
+        // https://cors-anywhere.herokuapp.com
         const origin = `${url.hostname}:${
             !url.port ? (url.protocol == "https:" ? 443 : 80) : url.port
         }`;

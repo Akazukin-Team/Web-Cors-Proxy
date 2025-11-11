@@ -4,9 +4,8 @@ import { ScriptProcessor } from "./processor/ScriptProcessor";
 import { CssProcessor } from "./processor/CssProcessor";
 import { InlineStyleProcessor } from "./processor/InlineStyleProcessor";
 import { HrefProcessor } from "./processor/HrefProcessor";
+import { ScriptFixProcessor } from "./processor/ScriptFixProcessor";
 import { Fetcher, fetcher } from "./Fetcher";
-import { utl } from "./Utils";
-const chunkProcess = false;
 
 class ProcessManager {
     private readonly fetcher: Fetcher;
@@ -20,8 +19,9 @@ class ProcessManager {
             new ImageProcessor(this.fetcher, url),
             new ScriptProcessor(this.fetcher, url),
             new CssProcessor(this.fetcher, url),
-            new InlineStyleProcessor(this.fetcher, url),
-            new HrefProcessor(this.fetcher, url),
+            new InlineStyleProcessor(url),
+            new HrefProcessor(url),
+            new ScriptFixProcessor(url),
         ];
 
         // History API のオーバーライド
@@ -34,6 +34,7 @@ class ProcessManager {
             history.pushState = function(state, title, url) {
                 window.parent.postMessage({ type: 'REDIRECT', url: url }, '*');
             };
+            //console.log(window.location);
         `;
         doc.head?.appendChild(historyScript);
         for (const processor of processors) {
@@ -49,7 +50,14 @@ class ProcessManager {
                         console.warn("Error processing element:", error);
                         return oldElem;
                     });
-                if (res === oldElem) continue;
+                if (res === oldElem) {
+                    continue;
+                }
+                /*console.log(
+                    `Processed element with ${processor.getProcessorName()}, ${
+                        res.outerHTML
+                    }`
+                );*/
                 oldElem.parentNode!.replaceChild(res, oldElem);
             }
             console.log("Processing complete.");
