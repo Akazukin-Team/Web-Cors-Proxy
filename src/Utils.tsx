@@ -142,6 +142,8 @@ class Utils {
         const matches = Array.from(cssContent.matchAll(urlRegex));
         const promises = matches.map(async (match) => {
             const originalUrl = match[1];
+            if (originalUrl.startsWith("data:")) return originalUrl;
+
             const absoluteUrl = utl.resolveUrl(originalUrl, baseUrl);
 
             if (this.isIgnoreUrl(absoluteUrl)) {
