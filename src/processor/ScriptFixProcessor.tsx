@@ -33,6 +33,14 @@ class ScriptFixProcessor implements IHtmlProcessor {
         }
 
         const script = elem as HTMLScriptElement;
+        const type = elem.getAttribute("type");
+        if (type
+            && !(type === "text/javascript"
+                || type === "application/javascript"
+                || type === "module")) {
+            return elem;
+        }
+
         const src = script.textContent;
 
         try {
