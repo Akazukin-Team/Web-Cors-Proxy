@@ -1,16 +1,21 @@
 {
-  "scripts": {
-    "build": "bun build ./src/index.html --outdir ./build --minify"
-  },
-  "files": [
-    "src/**/*.tsx"
-  ],
-  "devDependencies": {
-    "@types/bun": "^1.2.22",
-    "typescript": "^5.9.2"
-  },
-  "dependencies": {
-    "axios": "^1.12.2",
-    "esprima": "^4.0.1"
-  }
+    "scripts": {
+        "build": "bun build ./src/index.html --target browser --outdir ./build --minify",
+        "build2": "bun run Build.tsx"
+    },
+    "files": [
+        "src/**/*.tsx"
+    ],
+    "devDependencies": {
+        "@types/bun": "^1.2.23",
+        "typescript": "^5.9.3"
+    },
+    "dependencies": {
+        "@babel/core": "^7.28.4",
+        "@babel/generator": "^7.28.3",
+        "@babel/parser": "^7.28.4",
+        "@babel/traverse": "^7.28.4",
+        "@babel/types": "^7.28.4",
+        "axios": "^1.12.2"
+    }
 }
