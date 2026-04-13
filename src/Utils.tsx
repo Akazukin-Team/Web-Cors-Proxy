@@ -142,7 +142,7 @@ class Utils {
         const matches = Array.from(cssContent.matchAll(urlRegex));
         const promises = matches.map(async (match) => {
             const originalUrl = match[1];
-            if (originalUrl.startsWith("data:")) return originalUrl;
+            if (originalUrl.startsWith("data:")) return null;
 
             const absoluteUrl = utl.resolveUrl(originalUrl, baseUrl);
 
@@ -166,12 +166,14 @@ class Utils {
         const results = await Promise.all(promises);
 
         for (const result of results) {
-            if (result) {
-                processedCss = processedCss.replace(
-                    result.original,
-                    result.replacement
-                );
+            if (result === null) {
+                continue;
             }
+
+            processedCss = processedCss.replace(
+                result.original,
+                result.replacement
+            );
         }
 
         return processedCss;
