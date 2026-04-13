@@ -3,7 +3,7 @@ import {Fetcher} from "./Fetcher";
 class WebPage {
     private fetcher: Fetcher;
 
-    private url: URL;
+    private readonly url: URL;
     private frame: FrameData;
     private loading: boolean;
 
@@ -48,8 +48,8 @@ class WebPage {
 }
 
 class FrameData {
-    private url: string;
-    private doc: Document;
+    private readonly url: string;
+    private readonly doc: Document;
 
     constructor(doc: Document) {
         this.doc = doc;

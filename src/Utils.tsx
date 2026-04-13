@@ -1,9 +1,9 @@
-import { Fetcher, fetcher } from "./Fetcher";
+import {Fetcher, fetcher} from "./Fetcher";
 
-import { viewMgr } from "./ViewManager";
-import { parse } from "@babel/parser";
+import {viewMgr} from "./ViewManager";
+import {parse} from "@babel/parser";
+import {Location} from "./types/Location";
 import t = require("@babel/types");
-import { Location } from "./types/Location";
 
 const traverse = require("@babel/traverse").default;
 const generate = require("@babel/generator").default;
@@ -27,12 +27,12 @@ class Utils {
         traverse(ast, {
             // 値取得によるLocationの取得を修正
             MemberExpression(path) {
-                const { object, property } = path.node;
+                const {object, property} = path.node;
 
                 // window.location のパターンをチェック
                 if (
-                    t.isIdentifier(object, { name: "window" }) &&
-                    t.isIdentifier(property, { name: "location" })
+                    t.isIdentifier(object, {name: "window"}) &&
+                    t.isIdentifier(property, {name: "location"})
                 ) {
                     // 代入式の左辺（left）として使われている場合はスキップ
                     // (AssignmentExpressionで既に処理済み)
@@ -61,16 +61,16 @@ class Utils {
                         },
                         assign(url: string | URL): void {
                             window.parent.postMessage(
-                                { type: "REDIRECT", url: String(url) },
+                                {type: "REDIRECT", url: String(url)},
                                 "*"
                             );
                         },
                         reload(): void {
-                            window.parent.postMessage({ type: "RELOAD" }, "*");
+                            window.parent.postMessage({type: "RELOAD"}, "*");
                         },
                         replace(url: string | URL): void {
                             window.parent.postMessage(
-                                { type: "REDIRECT", url: String(url) },
+                                {type: "REDIRECT", url: String(url)},
                                 "*"
                             );
                         },
@@ -84,12 +84,12 @@ class Utils {
             },
             // 値変更によるRedirectを修正
             AssignmentExpression: (path) => {
-                const { left, right } = path.node;
+                const {left} = path.node;
 
                 if (
                     t.isMemberExpression(left) &&
-                    t.isIdentifier(left.object, { name: "window" }) &&
-                    t.isIdentifier(left.property, { name: "location" })
+                    t.isIdentifier(left.object, {name: "window"}) &&
+                    t.isIdentifier(left.property, {name: "location"})
                 ) {
                     // window.parent.postMessage({ type: 'REDIRECT', url: url }, '*')
                     const postMessageCall = t.callExpression(
@@ -151,7 +151,7 @@ class Utils {
 
             try {
                 const dataUrl = await this.fetcher.fetchAsBlobUrl(absoluteUrl);
-                return { original: match[0], replacement: `url('${dataUrl}')` };
+                return {original: match[0], replacement: `url('${dataUrl}')`};
             } catch (error) {
                 console.warn(
                     `Failed to fetch CSS resource: ${absoluteUrl}`,
@@ -192,4 +192,4 @@ class Utils {
 
 const utl = new Utils(fetcher);
 
-export { Utils, utl };
+export {Utils, utl};

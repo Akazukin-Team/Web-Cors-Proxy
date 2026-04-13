@@ -60,7 +60,7 @@ class ViewManager {
         }
     }
 
-    public updateAndDisplayWithUrl(url: string): Promise<void> {
+    public updateAndDisplayWithUrl(url: string): void {
         if (!this.validateUrl(url)) {
             return;
         }
@@ -79,7 +79,7 @@ class ViewManager {
             page.getFrame().close();
             const newFrame = new FrameData(doc);
             page.setFrame(newFrame);
-            await this.displayContentOfFrame(newFrame);
+            this.displayContentOfFrame(newFrame);
         } catch (error) {
             console.error("Error fetching website:", error);
             this.showError(
@@ -88,7 +88,7 @@ class ViewManager {
         }
     }
 
-    public async displayContentOfFrame(frame: FrameData): Promise<void> {
+    public displayContentOfFrame(frame: FrameData): void {
         const prevFrame: FrameData = this.currentFrame;
         this.currentFrame = frame;
 
