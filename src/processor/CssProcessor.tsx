@@ -1,9 +1,9 @@
-import { Fetcher } from "../Fetcher";
-import { IHtmlProcessor } from "./IHtmlProcessor";
-import { utl } from "../Utils";
+import {Fetcher} from "../Fetcher";
+import {IHtmlProcessor} from "./IHtmlProcessor";
+import {utl} from "../Utils";
 
 class CssProcessor implements IHtmlProcessor {
-    private baseUrl: URL;
+    private readonly baseUrl: URL;
     private fetcher: Fetcher;
 
     constructor(fetcher: Fetcher, baseUrl: URL) {
@@ -64,4 +64,4 @@ class CssProcessor implements IHtmlProcessor {
     }
 }
 
-export { CssProcessor };
+export {CssProcessor};

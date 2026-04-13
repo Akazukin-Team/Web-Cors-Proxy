@@ -20,20 +20,10 @@ class IFrameMessenger {
 
         if (event.data.type === "REDIRECT") {
             console.log("Redirecting to:", event.data.url);
-            if (event.data.format == true) {
-                this.viewMgr.updateAndDisplayWithUrl(utl.resolveUrl(event.data.url, this.viewMgr.getCurrentPage().getUrl()).href);
-            } else {
-                this.viewMgr.updateAndDisplayWithUrl(utl.resolveUrl(event.data.url, this.viewMgr.getCurrentPage().getUrl()).href);
-                //this.viewMgr.updateAndDisplayWithUrl(event.data.url);
-            }
+            this.viewMgr.updateAndDisplayWithUrl(utl.resolveUrl(event.data.url, this.viewMgr.getCurrentPage().getUrl()).href);
         } else if (event.data.type === "NAVIGATE") {
             console.log("Navigating to:", event.data.url);
-            if (event.data.format == true) {
-                this.viewMgr.displayWithUrl(utl.resolveUrl(event.data.url, this.viewMgr.getCurrentPage().getUrl()).href);
-            } else {
-                this.viewMgr.displayWithUrl(utl.resolveUrl(event.data.url, this.viewMgr.getCurrentPage().getUrl()).href);
-                //this.viewMgr.displayWithUrl(event.data.url);
-            }
+            this.viewMgr.displayWithUrl(utl.resolveUrl(event.data.url, this.viewMgr.getCurrentPage().getUrl()).href);
         } else if (event.data.type === "MESSAGE") {
             console.log("Message from iframe:", event.data.url);
         }

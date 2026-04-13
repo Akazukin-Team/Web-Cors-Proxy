@@ -1,8 +1,8 @@
-import { IHtmlProcessor } from "./IHtmlProcessor";
-import { utl } from "../Utils";
+import {IHtmlProcessor} from "./IHtmlProcessor";
+import {utl} from "../Utils";
 
 class InlineStyleProcessor implements IHtmlProcessor {
-    private baseUrl: URL;
+    private readonly baseUrl: URL;
 
     constructor(baseUrl: URL) {
         this.baseUrl = baseUrl;
@@ -48,4 +48,4 @@ class InlineStyleProcessor implements IHtmlProcessor {
     }
 }
 
-export { InlineStyleProcessor };
+export {InlineStyleProcessor};

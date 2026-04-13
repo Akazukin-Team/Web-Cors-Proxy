@@ -1,8 +1,8 @@
-import { IHtmlProcessor } from "./IHtmlProcessor";
-import { utl } from "../Utils";
+import {IHtmlProcessor} from "./IHtmlProcessor";
+import {utl} from "../Utils";
 
 class HrefProcessor implements IHtmlProcessor {
-    private baseUrl: URL;
+    private readonly baseUrl: URL;
 
     constructor(baseUrl: URL) {
         this.baseUrl = baseUrl;
@@ -56,4 +56,4 @@ class HrefProcessor implements IHtmlProcessor {
     }
 }
 
-export { HrefProcessor };
+export {HrefProcessor};

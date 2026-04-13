@@ -1,8 +1,8 @@
-import { IHtmlProcessor } from "./IHtmlProcessor";
-import { utl } from "../Utils";
+import {IHtmlProcessor} from "./IHtmlProcessor";
+import {utl} from "../Utils";
 
 class ScriptFixProcessor implements IHtmlProcessor {
-    private baseUrl: URL;
+    private readonly baseUrl: URL;
 
     constructor(baseUrl: URL) {
         this.baseUrl = baseUrl;
@@ -36,10 +36,8 @@ class ScriptFixProcessor implements IHtmlProcessor {
         const src = script.textContent;
 
         try {
-            //console.log("Fetching script:", src);
             const scriptContent = await utl.processJs(src, this.baseUrl);
 
-            //console.log("Processing script:", scriptContent);
             const newElem = elem.ownerDocument!.createElement("script");
             newElem.textContent = scriptContent;
             return newElem;
@@ -54,4 +52,4 @@ class ScriptFixProcessor implements IHtmlProcessor {
     }
 }
 
-export { ScriptFixProcessor };
+export {ScriptFixProcessor};
